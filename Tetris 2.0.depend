@@ -1,0 +1,79 @@
+# depslib dependency file v1.0
+1616293398 source:f:\tetris 2.0\main.cpp
+	"game.h"
+
+1616227423 source:f:\tetris 2.0\class.cpp
+	"class.h"
+
+1616226647 f:\tetris 2.0\class.h
+	"thongso.h"
+
+1616342035 f:\tetris 2.0\thongso.h
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<string>
+	<fstream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1616293184 source:f:\tetris 2.0\game.cpp
+	"game.h"
+
+1616293184 f:\tetris 2.0\game.h
+	"class.h"
+
+1616227423 source:f:\tetris 2.0\code\class.cpp
+	"class.h"
+
+1616226647 f:\tetris 2.0\code\class.h
+	"thongso.h"
+
+1616231493 f:\tetris 2.0\code\thongso.h
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<string>
+	<fstream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1616293184 source:f:\tetris 2.0\code\game.cpp
+	"game.h"
+
+1616293184 f:\tetris 2.0\code\game.h
+	"class.h"
+
+1616293398 source:f:\tetris 2.0\code\main.cpp
+	"game.h"
+
+1616227423 source:f:\tetris_2.0\class.cpp
+	"class.h"
+
+1616226647 f:\tetris_2.0\class.h
+	"thongso.h"
+
+1616342035 f:\tetris_2.0\thongso.h
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<string>
+	<fstream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1616424733 source:f:\tetris_2.0\game.cpp
+	"game.h"
+
+1616424392 f:\tetris_2.0\game.h
+	"class.h"
+
+1616424464 source:f:\tetris_2.0\main.cpp
+	"game.h"
+

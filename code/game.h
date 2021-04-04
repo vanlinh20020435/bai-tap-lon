@@ -36,13 +36,13 @@ public:
 
     void close();
 
-    void DiemSo();
+    void Score();
 
-    void renderlogo();
+    void RenderLogo();
 
-    void mosuedown(SDL_Event& e);
+    void MosueDown(SDL_Event& e);
 
-    void handevent(SDL_Event& e);
+    void HandEvent(SDL_Event& e);
 
     void ClearTmpMatrix();
 
@@ -52,7 +52,7 @@ public:
 
     void SetTmpColor2(int color);
 
-    void reset();
+    void Reset();
 
     void GetTmpSize();
 
@@ -66,15 +66,15 @@ public:
 
     void DrawTmpMatrix();
 
-    void KiemTraVaCham (int key);
+    void CollisionCheck (int key);
 
-    void XoaHang(int h);
+    void ClearRow(int h);
 
-    void KiemTraHang();
+    void CheckRow();
 
     void GameOver();
 
-    void rendergameover();
+    void RenderGameOver();
 
     void GamePlay();
 };

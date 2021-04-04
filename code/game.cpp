@@ -142,7 +142,7 @@ void game::close()
 	IMG_Quit();
 	SDL_Quit();
 }
-void game::DiemSo(){
+void game::Score(){
     string s1=to_string(diem);
     string s2=to_string(hightscore);
     gFont = TTF_OpenFont( "ARCADE.ttf", 30 );
@@ -159,7 +159,7 @@ void game::DiemSo(){
     gTextTexture[0].render(480,460,gRenderer);
     gTextTexture[1].render(660,460,gRenderer);
 }
-void game::renderlogo(){
+void game::RenderLogo(){
     int x,y;
     SDL_GetMouseState( &x, &y );
     //bool insile =false;
@@ -182,7 +182,7 @@ void game::renderlogo(){
         gTextTexture[0].render(323,360,gRenderer);
         gTextTexture[1].render(323,420,gRenderer);
 }
-void game::mosuedown(SDL_Event& e){
+void game::MosueDown(SDL_Event& e){
     int x,y;
     if(e.type == SDL_MOUSEBUTTONUP){
         SDL_GetMouseState( &x, &y );
@@ -199,7 +199,7 @@ void game::mosuedown(SDL_Event& e){
             }
     }
 }
-void game::handevent(SDL_Event& e){
+void game::HandEvent(SDL_Event& e){
     while( SDL_PollEvent(&e) != 0 ){
 
 					if( e.type == SDL_QUIT )
@@ -222,20 +222,20 @@ void game::handevent(SDL_Event& e){
                             }
                             case SDLK_RIGHT:{
                                 if(tmp_x+tmp_Width*20<=380)tmp_x+=20;
-                                KiemTraVaCham(2);
+                                CollisionCheck(2);
                                 DiChuyen=true;
                                 break;
                             }
                             case SDLK_LEFT:{
                                 if(tmp_x>=80)tmp_x-=20;
-                                KiemTraVaCham(3);
+                                CollisionCheck(3);
                                 DiChuyen=true;
                                 break;
                             }
                             case SDLK_DOWN:{
                                 if(tmp_y+tmp_Height*20<540)tmp_y+=20;
                                 dem+=20;
-                                KiemTraVaCham(4);
+                                CollisionCheck(4);
                                 DiChuyen=true;
                                 break;
                             }                    }
@@ -283,7 +283,7 @@ void game::SetTmpColor2(int color)
         }
     }
 }
-void game::reset(){
+void game::Reset(){
     tmp_x=star_x;
     tmp_y=star_y;
 }
@@ -332,7 +332,7 @@ void game::GenerateTmpMatrix()
     // Clear the old Matrix
     diem=diem+10;
     ClearTmpMatrix();
-    reset();
+    Reset();
     //
     if (radom == 0)
     {
@@ -598,7 +598,7 @@ void game::RotateTmpMatrix()
 void game::DrawTetrisMatrix(){
     logo.render(455,80,gRenderer);
     background.render(60,0,gRenderer);
-     DiemSo();
+     Score();
     int px_start = MATRIX_DRAW_POS_X + 20;
     int py_start = MATRIX_DRAW_POS_Y;
     //
@@ -655,7 +655,7 @@ void game::DrawTmpMatrix(){
         dem=0;
     }
 }
-void game::KiemTraVaCham (int key){
+void game::CollisionCheck (int key){
     bool vacham=false;
     if(key==2){
         for(int i=0;i<4;i++){
@@ -688,7 +688,7 @@ void game::KiemTraVaCham (int key){
         if(vacham==true) tmp_y=tmp_y-20;
     }
 }
-void game::XoaHang(int h){
+void game::ClearRow(int h){
     Mix_PlayChannel( -1, sucess, 0 );
     for(int j=0;j<MATRIX_PIECES_X;j++) PieceMatrix[j][h].Used==false;
     for(int i=h;i>=0;i--){
@@ -699,7 +699,7 @@ void game::XoaHang(int h){
 
     }
 }
-void game::KiemTraHang()
+void game::CheckRow()
 {
     bool xoahang=true;
     int demsohang=0;
@@ -708,7 +708,7 @@ void game::KiemTraHang()
             if(PieceMatrix[j][i].Used==false) xoahang=false;
         }
         if(xoahang==true){
-            XoaHang(i);
+            ClearRow(i);
             demsohang++;
         }
         xoahang=true;
@@ -727,7 +727,7 @@ void game::GameOver(){
     }
     }
 }
-void game::rendergameover(){
+void game::RenderGameOver(){
     int x,y;
     string s=to_string(diem_over);
     SDL_GetMouseState( &x, &y );
@@ -786,19 +786,19 @@ void game::GamePlay(){
 			{
 			    dem+=20;
 			    DiChuyen=false;
-				handevent(e);
+				HandEvent(e);
 				SDL_SetRenderDrawColor( gRenderer, 0, 0, 0, 0 );
 				SDL_RenderClear( gRenderer );
 				if(TrangThaiManHinh==0){
-                        renderlogo();
-                        mosuedown(e);
+                        RenderLogo();
+                        MosueDown(e);
 				}
 				else if(TrangThaiManHinh==-1) quit=true;
 				else if(TrangThaiManHinh==1){
                     nhacvictory=0;
                     DrawTetrisMatrix();
                     DrawTmpMatrix();
-                    KiemTraHang();
+                    CheckRow();
                     GameOver();
 				}
 				else if(TrangThaiManHinh==2){
@@ -812,8 +812,8 @@ void game::GamePlay(){
                             nhacvictory++;
                             newhighscore=true;
                         }
-                        rendergameover();
-                        mosuedown(e);
+                        RenderGameOver();
+                        MosueDown(e);
 
 				}
 				SDL_RenderPresent( gRenderer );

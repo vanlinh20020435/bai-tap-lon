@@ -31,6 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="code/class.cpp" />
+		<Unit filename="code/class.h" />
+		<Unit filename="code/game.cpp" />
+		<Unit filename="code/game.h" />
+		<Unit filename="code/main.cpp" />
+		<Unit filename="code/thongso.h" />
 		<Unit filename="dll/SDL2.dll" />
 		<Unit filename="dll/SDL2_image.dll" />
 		<Unit filename="dll/SDL2_mixer.dll" />
@@ -49,12 +55,6 @@
 		<Unit filename="dll/libvorbisfile-3.dll" />
 		<Unit filename="dll/libwebp-7.dll" />
 		<Unit filename="dll/zlib1.dll" />
-		<Unit filename="headerfile/class.h" />
-		<Unit filename="headerfile/game.h" />
-		<Unit filename="headerfile/thongso.h" />
-		<Unit filename="src/class.cpp" />
-		<Unit filename="src/game.cpp" />
-		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

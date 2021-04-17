@@ -17,6 +17,8 @@ public:
     bool newhighscore=false;
     bool Roi = false,DiChuyen = false;
     bool quit=false;
+    bool Pause=false,down=false,_down=false;
+    bool SoundOff=false;
     SDL_Window* gWindow = NULL;
     SDL_Renderer* gRenderer = NULL;
     Mix_Music* nhacnen=NULL;
@@ -24,12 +26,11 @@ public:
     Mix_Music* lose=NULL;
     Mix_Chunk *sucess = NULL;
     TTF_Font *gFont = NULL;
-    LTexture gTextTexture[kmenunum];
-    LTexture color[total],borda,gameover,logo,tetris_logo,background,highscore;
+    LTexture gTextTexture[kmenunum],color[total];
+    LTexture borda,gameover,logo,tetris_logo,background,highscore,pause,play,volume,tatvolume;
     SDL_Color textColor[kmenunum];
     TPiece PieceMatrix[MATRIX_PIECES_X][MATRIX_PIECES_Y];
     TPiece TmpMatrix[4][4],TmpMatrix2[4][4];
-    //SDL_Event* e;
     bool init();
 
     bool loadMedia();
@@ -42,7 +43,13 @@ public:
 
     void MosueDown(SDL_Event& e);
 
+    void MosueDownToPause(SDL_Event& e);
+
+    void MosueDownToPlay(SDL_Event& e);
+
     void HandEvent(SDL_Event& e);
+
+    void Volume(SDL_Event& e);
 
     void ClearTmpMatrix();
 
@@ -62,9 +69,11 @@ public:
 
     void RotateTmpMatrix();
 
-    void DrawTetrisMatrix();
+    void DrawGame();
 
     void DrawTmpMatrix();
+
+    void DrawTmpMatrixWhenPause();
 
     void CollisionCheck (int key);
 

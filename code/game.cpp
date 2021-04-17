@@ -68,8 +68,6 @@ bool game::init()
 
 bool game::loadMedia()
 {
-
-	//Loading success flag
 	bool success = true;
     if(!(color[blue].loadFromFile("image//blue.png",gRenderer)&&
     borda.loadFromFile("image//borda.png",gRenderer)&&
@@ -83,6 +81,10 @@ bool game::loadMedia()
     gameover.loadFromFile("image//gameover.png",gRenderer)&&
     tetris_logo.loadFromFile("image//Tetris_Logo.jpg",gRenderer)&&
     background.loadFromFile("image//background.png",gRenderer)&&
+    pause.loadFromFile("image//pause.png",gRenderer)&&
+    play.loadFromFile("image//play.png",gRenderer)&&
+    volume.loadFromFile("image//volume.png",gRenderer)&&
+    tatvolume.loadFromFile("image//tatvolume.png",gRenderer)&&
     highscore.loadFromFile("image//hightscore.png",gRenderer)))
     {
         printf( "Failed to load arrow texture!\n" );
@@ -146,18 +148,17 @@ void game::Score(){
     string s1=to_string(diem);
     string s2=to_string(hightscore);
     gFont = TTF_OpenFont( "ARCADE.ttf", 30 );
-    textColor[3]={255,255,255};
-    textColor[2]={255,255,255};
-    textColor[1]={255,255,255};
-    textColor[0]={255,255,255};
+    for(int i=0;i<kmenunum;i++) textColor[i]={255,255,255};
     gTextTexture[3].loadFromRenderedText( s1,gRenderer,gFont, textColor[3] );
     gTextTexture[2].loadFromRenderedText( "SCORE: ",gRenderer,gFont, textColor[2] );
-    gTextTexture[1].loadFromRenderedText( s2,gRenderer,gFont, textColor[3]);
-    gTextTexture[0].loadFromRenderedText( "HIGH SCORE: ",gRenderer,gFont, textColor[2] );
-    gTextTexture[2].render(480,360,gRenderer);
-    gTextTexture[3].render(580,360,gRenderer);
+    gTextTexture[1].loadFromRenderedText( s2,gRenderer,gFont, textColor[1]);
+    gTextTexture[0].loadFromRenderedText( "HIGH SCORE: ",gRenderer,gFont, textColor[0] );
+    gTextTexture[4].loadFromRenderedText( "NEXT: ",gRenderer,gFont, textColor[4] );
+    gTextTexture[2].render(480,340,gRenderer);
+    gTextTexture[3].render(580,340,gRenderer);
     gTextTexture[0].render(480,460,gRenderer);
     gTextTexture[1].render(660,460,gRenderer);
+    gTextTexture[4].render(480,220,gRenderer);
 }
 void game::RenderLogo(){
     int x,y;
@@ -199,8 +200,40 @@ void game::MosueDown(SDL_Event& e){
             }
     }
 }
+void game::MosueDownToPause(SDL_Event& e){
+    int x,y;
+        if(e.type == SDL_MOUSEBUTTONDOWN){
+            SDL_GetMouseState( &x, &y );
+            if (x >= pause.getpos_X() && x <= pause.getpos_X() + pause.getWidth() &&
+                y >= pause.getpos_Y() && y <= pause.getpos_Y() + pause.getHeight()){
+                    down=true;
+            }
+        }
+        if(down==true&&e.type == SDL_MOUSEBUTTONUP){
+            down=false;
+            Pause=true;
+            TrangThaiManHinh=3;
+            Mix_PauseMusic();
+        }
+}
+void game::MosueDownToPlay(SDL_Event& e){
+    int x,y;
+        if(e.type == SDL_MOUSEBUTTONDOWN){
+            SDL_GetMouseState( &x, &y );
+            if (x >= play.getpos_X() && x <= play.getpos_X() + play.getWidth() &&
+                    y >= play.getpos_Y() && y <= play.getpos_Y() + play.getHeight()){
+                    down=true;
+            }
+        }
+        if(down==true&&e.type == SDL_MOUSEBUTTONUP){
+            down=false;
+            Pause=false;
+            TrangThaiManHinh=1;
+            Mix_ResumeMusic();
+        }
+}
 void game::HandEvent(SDL_Event& e){
-    while( SDL_PollEvent(&e) != 0 ){
+    while( SDL_PollEvent(&e) != 0){
 
 					if( e.type == SDL_QUIT )
 					{
@@ -208,40 +241,79 @@ void game::HandEvent(SDL_Event& e){
 						quit = true;
 					}
 					if(e.type == SDL_KEYDOWN){
-                            DiChuyen=true;
-
-                        switch (e.key.keysym.sym){
-                            case SDLK_ESCAPE:{
-                                quit=true;
-                                break;
+                        DiChuyen=true;
+                        if(Pause==false){
+                            switch (e.key.keysym.sym){
+                                case SDLK_ESCAPE:{
+                                    quit=true;
+                                    break;
+                                }
+                                case SDLK_UP:{
+                                    RotateTmpMatrix();
+                                    DiChuyen=true;
+                                    break;
+                                }
+                                case SDLK_RIGHT:{
+                                    if(tmp_x+tmp_Width*20<=380)tmp_x+=20;
+                                    CollisionCheck(2);
+                                    DiChuyen=true;
+                                    break;
+                                }
+                                case SDLK_LEFT:{
+                                    if(tmp_x>=80)tmp_x-=20;
+                                    CollisionCheck(3);
+                                    DiChuyen=true;
+                                    break;
+                                }
+                                case SDLK_DOWN:{
+                                    if(tmp_y+tmp_Height*20<540)tmp_y+=20;
+                                    dem+=20;
+                                    CollisionCheck(4);
+                                    DiChuyen=true;
+                                    break;
+                                }
                             }
-                            case SDLK_UP:{
-                                RotateTmpMatrix();
-                                DiChuyen=true;
-                                break;
-                            }
-                            case SDLK_RIGHT:{
-                                if(tmp_x+tmp_Width*20<=380)tmp_x+=20;
-                                CollisionCheck(2);
-                                DiChuyen=true;
-                                break;
-                            }
-                            case SDLK_LEFT:{
-                                if(tmp_x>=80)tmp_x-=20;
-                                CollisionCheck(3);
-                                DiChuyen=true;
-                                break;
-                            }
-                            case SDLK_DOWN:{
-                                if(tmp_y+tmp_Height*20<540)tmp_y+=20;
-                                dem+=20;
-                                CollisionCheck(4);
-                                DiChuyen=true;
-                                break;
-                            }                    }
+                        }
+                        else{
+                            if(e.key.keysym.sym==SDLK_ESCAPE) quit=true;
+                        }
 					}
 				}
-};
+}
+void game::Volume(SDL_Event &e){
+    if(SoundOff==false){
+        int x,y;
+        if(e.type == SDL_MOUSEBUTTONDOWN){
+            SDL_GetMouseState( &x, &y );
+            if (x >= volume.getpos_X() && x <= volume.getpos_X() + volume.getWidth() &&
+                    y >= volume.getpos_Y() && y <= volume.getpos_Y() + volume.getHeight()){
+                    _down=true;
+            }
+        }
+        if(_down==true&&e.type == SDL_MOUSEBUTTONUP){
+            _down=false;
+            SoundOff=true;
+            Mix_VolumeChunk(sucess,0);
+            Mix_VolumeMusic(0);
+        }
+    }
+    else{
+        int x,y;
+        if(e.type == SDL_MOUSEBUTTONDOWN){
+            SDL_GetMouseState( &x, &y );
+            if (x >= tatvolume.getpos_X() && x <= tatvolume.getpos_X() + tatvolume.getWidth() &&
+                    y >= tatvolume.getpos_Y() && y <= tatvolume.getpos_Y() + tatvolume.getHeight()){
+                    _down=true;
+            }
+        }
+        if(_down==true&&e.type == SDL_MOUSEBUTTONUP){
+            _down=false;
+            SoundOff=false;
+            Mix_VolumeChunk(sucess,128);
+            Mix_VolumeMusic(128);
+        }
+    }
+}
 void game::ClearTmpMatrix()
 {
     for (int xp = 0; xp < 4; xp++)
@@ -595,13 +667,17 @@ void game::RotateTmpMatrix()
         GetTmpSize();
     }
 }
-void game::DrawTetrisMatrix(){
-    logo.render(455,80,gRenderer);
+void game::DrawGame(){
     background.render(60,0,gRenderer);
-     Score();
+    logo.render(455,80,gRenderer);
+    if(Pause==false) pause.render(SCREEN_WIDTH-pause.getWidth(),0,gRenderer);
+    else play.render(SCREEN_WIDTH-play.getWidth(),5,gRenderer);
+    if(SoundOff==false) volume.render(SCREEN_WIDTH-pause.getWidth()-75,10,gRenderer);
+    else tatvolume.render(SCREEN_WIDTH-pause.getWidth()-75,10,gRenderer);
     int px_start = MATRIX_DRAW_POS_X + 20;
     int py_start = MATRIX_DRAW_POS_Y;
     //
+    Score();
     int rightBorderPosX = px_start + (MATRIX_PIECES_X * 20);
     int leftBorderPosX = MATRIX_DRAW_POS_X;
     int YLimit = (MATRIX_PIECES_Y * 20) + 20 + py_start;
@@ -636,7 +712,7 @@ void game::DrawTmpMatrix(){
                 color[TmpMatrix[i][j].Color].render(tmp_x+i*20,tmp_y+j*20,gRenderer);
             }
             if(TmpMatrix2[i][j].Used==true){
-                color[TmpMatrix2[i][j].Color].render(110-tmp2_Width*10+i*20+440,200+j*20,gRenderer);
+                color[TmpMatrix2[i][j].Color].render(200-tmp2_Width*10+i*20+440,220+j*20,gRenderer);
             }
         }
     }
@@ -653,6 +729,20 @@ void game::DrawTmpMatrix(){
     if(dem>=dem_max&&DiChuyen==false){
         if(timedelay==0)tmp_y=tmp_y+20;
         dem=0;
+    }
+}
+void game::DrawTmpMatrixWhenPause(){
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+
+            if(TmpMatrix[i][j].Used==true){
+                if(PieceMatrix[(tmp_x/20)+i-3][(tmp_y/20)+j+1].Used==true) Roi=false;
+                color[TmpMatrix[i][j].Color].render(tmp_x+i*20,tmp_y+j*20,gRenderer);
+            }
+            if(TmpMatrix2[i][j].Used==true){
+                color[TmpMatrix2[i][j].Color].render(110-tmp2_Width*10+i*20+440,200+j*20,gRenderer);
+            }
+        }
     }
 }
 void game::CollisionCheck (int key){
@@ -731,7 +821,6 @@ void game::RenderGameOver(){
     int x,y;
     string s=to_string(diem_over);
     SDL_GetMouseState( &x, &y );
-    //bool insile =false;
                 for (int i = 0; i < 2; ++i)
                 {
                     if (x >= gTextTexture[i].getpos_X() && x <= gTextTexture[i].getpos_X() + gTextTexture[i].getWidth() &&
@@ -780,10 +869,10 @@ void game::GamePlay(){
 		}
 		else
 		{
-		    SDL_Event e;
 			Mix_PlayMusic(nhacnen,-1);
 			while( !quit )
 			{
+			    SDL_Event e;
 			    dem+=20;
 			    DiChuyen=false;
 				HandEvent(e);
@@ -796,8 +885,10 @@ void game::GamePlay(){
 				else if(TrangThaiManHinh==-1) quit=true;
 				else if(TrangThaiManHinh==1){
                     nhacvictory=0;
-                    DrawTetrisMatrix();
+                    DrawGame();
                     DrawTmpMatrix();
+                    MosueDownToPause(e);
+                    Volume(e);
                     CheckRow();
                     GameOver();
 				}
@@ -815,6 +906,12 @@ void game::GamePlay(){
                         RenderGameOver();
                         MosueDown(e);
 
+				}
+				else if(TrangThaiManHinh==3){
+                    DrawGame();
+                    DrawTmpMatrixWhenPause();
+                    MosueDownToPlay(e);
+                    Volume(e);
 				}
 				SDL_RenderPresent( gRenderer );
 			}

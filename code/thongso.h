@@ -10,7 +10,7 @@
 #include<SDL_ttf.h>
 #include<SDL_mixer.h>
 using namespace std;
-enum Color{
+enum Color {
     blue,
     violet,
     cyan,
@@ -20,6 +20,31 @@ enum Color{
     yellow,
     total
 };
+
+enum ManHinh{
+    Logo,
+    Play,
+    Over,
+    _Pause,
+    Quit
+};
+
+enum Button{
+    Right,
+    Left,
+    Down
+};
+
+enum TmpStyle{
+    I,
+    J,
+    L,
+    O,
+    Z,
+    T,
+    S
+};
+
 const int MATRIX_DRAW_POS_X = 40;
 const int MATRIX_DRAW_POS_Y = 0;
 const int MATRIX_PIECES_X = 18;

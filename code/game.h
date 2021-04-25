@@ -4,8 +4,8 @@
 using namespace std;
 class LTexture;
 class TPiece;
-class game{
-public:
+class game {
+private:
     int tmp_x,tmp_y;
     int TrangThaiManHinh=0;
     int tmp_Width=0,tmp_Height=0,tmp2_Width=0,tmp2_Height=0;
@@ -14,23 +14,30 @@ public:
     int diem=-10;
     int timedelay=600;
     int hightscore;
+
     bool newhighscore=false;
     bool Roi = false,DiChuyen = false;
     bool quit=false;
     bool Pause=false,down=false,_down=false;
     bool SoundOff=false;
+
     SDL_Window* gWindow = NULL;
     SDL_Renderer* gRenderer = NULL;
+
     Mix_Music* nhacnen=NULL;
     Mix_Music* victory=NULL;
     Mix_Music* lose=NULL;
     Mix_Chunk *sucess = NULL;
+
     TTF_Font *gFont = NULL;
+
     LTexture gTextTexture[kmenunum],color[total];
     LTexture borda,gameover,logo,tetris_logo,background,highscore,pause,play,volume,tatvolume;
     SDL_Color textColor[kmenunum];
+
     TPiece PieceMatrix[MATRIX_PIECES_X][MATRIX_PIECES_Y];
     TPiece TmpMatrix[4][4],TmpMatrix2[4][4];
+public:
     bool init();
 
     bool loadMedia();

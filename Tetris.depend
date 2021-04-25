@@ -1,0 +1,53 @@
+# depslib dependency file v1.0
+1619008052 source:f:\tetris\code\class.cpp
+	"class.h"
+
+1619007700 f:\tetris\code\class.h
+	"thongso.h"
+
+1619090217 f:\tetris\code\thongso.h
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<string>
+	<fstream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1619268956 source:f:\tetris\code\game.cpp
+	"game.h"
+
+1619008075 f:\tetris\code\game.h
+	"class.h"
+
+1619007674 source:f:\tetris\code\main.cpp
+	"game.h"
+
+1619008052 source:f:\tetris by nguyen van linh - 20020435\code\class.cpp
+	"class.h"
+
+1619007700 f:\tetris by nguyen van linh - 20020435\code\class.h
+	"thongso.h"
+
+1619090217 f:\tetris by nguyen van linh - 20020435\code\thongso.h
+	<iostream>
+	<stdlib.h>
+	<time.h>
+	<string>
+	<fstream>
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+
+1619268956 source:f:\tetris by nguyen van linh - 20020435\code\game.cpp
+	"game.h"
+
+1619008075 f:\tetris by nguyen van linh - 20020435\code\game.h
+	"class.h"
+
+1619007674 source:f:\tetris by nguyen van linh - 20020435\code\main.cpp
+	"game.h"
+
